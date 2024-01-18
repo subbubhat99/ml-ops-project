@@ -1,5 +1,9 @@
 steps:
-    - name: 'gcr.io/cloud-builders/docker'
-        args: ['build', '-t', 'gcr.io/<project-id>/<image-name>', '.']
-    - name: 'gcr.io/cloud-builders/docker'
-       args: ['push', 'gcr.io/<project-id>/<image-name>']
+
+- name: python
+  entrypoint: bash
+  args: ['-c', 'pip install -U dvc dvc[gs]; dvc pull; echo Done']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/nifty-atlas-410710/train', '.']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/nifty-atlas-410710/train']
